@@ -1,0 +1,25 @@
+{
+  "name": "leasehold-app",
+  "version": "1.0.0",
+  "description": "Leasehold app module for LDEM.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Leasehold/leasehold-app.git"
+  },
+  "keywords": [
+    "leasehold",
+    "app",
+    "module",
+    "ldem"
+  ],
+  "author": "Jonathan Gros-Dubois",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Leasehold/leasehold-app/issues"
+  },
+  "homepage": "https://github.com/Leasehold/leasehold-app#readme"
+}
