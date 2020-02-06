@@ -5,7 +5,9 @@ class LeaseholdApp {
   constructor() {
     this.channel = null;
     this.options = {};
-    this.appState = {};
+    this.appState = {
+      modules: {}
+    };
     this.nonce = crypto.randomBytes(8).toString('hex');
     this.os = os.platform() + os.release();
   }
@@ -36,6 +38,21 @@ class LeaseholdApp {
         handler: async (action) => {
           this.updateAppState(action.params);
         }
+      },
+      getComponentConfig: {
+        handler: (action) => this.config.components[action.params]
+      },
+      getModuleState: {
+        handler: (action) => this.appState.modules[action.params.moduleName]
+      },
+      updateModuleState: {
+        handler: (action) => {
+          this.appState.modules = {
+            ...this.appState.modules,
+            ...action.params
+          };
+          this.channel.publish('state:updated', this.appState);
+        }
       }
     };
   }
@@ -48,7 +65,8 @@ class LeaseholdApp {
       state,
       broadhash,
       wsPort,
-      httpPort
+      httpPort,
+      modules
     } = this.appState;
     this.appState = {
       version,
@@ -60,7 +78,8 @@ class LeaseholdApp {
       broadhash,
       wsPort,
       httpPort,
-      ...newAppState
+      ...newAppState,
+      modules
     };
     this.channel.publish('state:updated', this.appState);
   }
@@ -73,7 +92,8 @@ class LeaseholdApp {
       ...options.nodeInfo,
       height: 1,
       wsPort: this.config.modules[mainNetworkModule].wsPort,
-      httpPort: this.config.modules[mainHTTPAPIModule].httpPort
+      httpPort: this.config.modules[mainHTTPAPIModule].httpPort,
+      modules: {}
     };
   }
 
