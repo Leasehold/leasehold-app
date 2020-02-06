@@ -1,8 +1,13 @@
+const crypto = require('crypto');
+const os = require('os');
+
 class LeaseholdApp {
   constructor() {
     this.channel = null;
     this.options = {};
     this.appState = {};
+    this.nonce = crypto.randomBytes(8).toString('hex');
+    this.os = os.platform() + os.release();
   }
 
   get alias() {
@@ -38,9 +43,7 @@ class LeaseholdApp {
   updateAppState(newAppState) {
     let {
       version,
-      os,
       protocolVersion,
-      nonce,
       height,
       state,
       broadhash,
@@ -49,9 +52,9 @@ class LeaseholdApp {
     } = this.appState;
     this.appState = {
       version,
-      os,
       protocolVersion,
-      nonce,
+      os: this.os,
+      nonce: this.nonce,
       height,
       state,
       broadhash,
@@ -68,6 +71,7 @@ class LeaseholdApp {
     let {mainHTTPAPIModule, mainNetworkModule} = options;
     this.appState = {
       ...options.nodeInfo,
+      height: 1,
       wsPort: this.config.modules[mainNetworkModule].wsPort,
       httpPort: this.config.modules[mainHTTPAPIModule].httpPort
     };
