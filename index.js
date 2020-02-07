@@ -35,7 +35,7 @@ class LeaseholdApp {
         }
       },
       getComponentConfig: {
-        handler: (action) => this.config.components[action.params]
+        handler: (action) => this.options.components[action.params]
       },
       getModuleState: {
         handler: (action) => this.appState.modules[action.params.moduleName]
