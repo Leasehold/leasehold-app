@@ -21,7 +21,7 @@ class LeaseholdApp {
   }
 
   get events() {
-    return ['state:updated'];
+    return ['ready', 'state:updated'];
   }
 
   get actions() {
@@ -92,6 +92,7 @@ class LeaseholdApp {
       httpPort: this.config.modules[mainHTTPAPIModule].httpPort,
       modules: {}
     };
+    this.channel.publish('ready');
   }
 
   async unload() {}
