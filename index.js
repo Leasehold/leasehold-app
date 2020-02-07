@@ -26,11 +26,6 @@ class LeaseholdApp {
 
   get actions() {
     return {
-      getComponentConfig: {
-        handler: async (action) => {
-          return this.options.components[action.params];
-        }
-      },
       getApplicationState: {
         handler: async (action) => ({...this.appState})
       },
@@ -90,6 +85,8 @@ class LeaseholdApp {
     let {mainHTTPAPIModule, mainNetworkModule} = options;
     this.appState = {
       ...options.nodeInfo,
+      os: this.os,
+      nonce: this.nonce,
       height: 1,
       wsPort: this.config.modules[mainNetworkModule].wsPort,
       httpPort: this.config.modules[mainHTTPAPIModule].httpPort,
