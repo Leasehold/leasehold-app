@@ -97,7 +97,7 @@ class LeaseholdApp {
     (async () => {
       for await (let [data] of this.processStream.listener('message')) {
         if (data && data.event === 'appReady') {
-          this.channel.publish('ready');
+          this.channel.publish('app:ready');
           break;
         }
       }
