@@ -47,7 +47,7 @@ class LeaseholdApp {
             ...this.appState.modules,
             ...action.params
           };
-          this.channel.publish('app:state:updated', {data: this.appState});
+          this.channel.publish('leasehold_app:state:updated', {data: this.appState});
         }
       }
     };
@@ -77,27 +77,28 @@ class LeaseholdApp {
       ...newAppState,
       modules
     };
-    this.channel.publish('app:state:updated', {data: this.appState});
+    this.channel.publish('leasehold_app:state:updated', {data: this.appState});
   }
 
   async load(channel, options) {
+    let mainNetworkConfig = this.appConfig.modules[this.appConfig.redirects.network] || {};
+    let mainHTTPAPIConfig = this.appConfig.modules[this.appConfig.redirects.http_api] || {};
     this.channel = channel;
     this.options = options;
-    let {mainHTTPAPIModule, mainNetworkModule} = options;
     this.appState = {
       ...options.nodeInfo,
       os: this.os,
       nonce: this.nonce,
       height: 1,
-      wsPort: this.appConfig.modules[mainNetworkModule].wsPort,
-      httpPort: this.appConfig.modules[mainHTTPAPIModule].httpPort,
+      wsPort: mainNetworkConfig.wsPort || options.defaultWSPort,
+      httpPort: mainHTTPAPIConfig.httpPort || options.defaultHTTPPort,
       modules: {}
     };
 
     (async () => {
       for await (let [data] of this.processStream.listener('message')) {
         if (data && data.event === 'appReady') {
-          this.channel.publish('app:ready');
+          this.channel.publish('leasehold_app:ready');
           break;
         }
       }
