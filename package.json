@@ -1,6 +1,6 @@
 {
   "name": "leasehold-app",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Leasehold app module for LDEM.",
   "main": "index.js",
   "scripts": {

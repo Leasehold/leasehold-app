@@ -89,8 +89,8 @@ class LeaseholdApp {
       os: this.os,
       nonce: this.nonce,
       height: 1,
-      wsPort: this.config.modules[mainNetworkModule].wsPort,
-      httpPort: this.config.modules[mainHTTPAPIModule].httpPort,
+      wsPort: this.appConfig.modules[mainNetworkModule].wsPort,
+      httpPort: this.appConfig.modules[mainHTTPAPIModule].httpPort,
       modules: {}
     };
 
