@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const os = require('os');
 
 class LeaseholdApp {
-  constructor() {
+  constructor({processStream}) {
     this.channel = null;
     this.options = {};
     this.appState = {
@@ -10,6 +10,7 @@ class LeaseholdApp {
     };
     this.nonce = crypto.randomBytes(8).toString('hex');
     this.os = os.platform() + os.release();
+    this.processStream = processStream;
   }
 
   get alias() {
@@ -92,7 +93,15 @@ class LeaseholdApp {
       httpPort: this.config.modules[mainHTTPAPIModule].httpPort,
       modules: {}
     };
-    this.channel.publish('ready');
+
+    (async () => {
+      for await (let [data] of this.processStream.listener('message')) {
+        if (data && data.event === 'appReady') {
+          this.channel.publish('ready');
+          break;
+        }
+      }
+    })();
   }
 
   async unload() {}
