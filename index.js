@@ -47,7 +47,7 @@ class LeaseholdApp {
             ...this.appState.modules,
             ...action.params
           };
-          this.channel.publish('state:updated', this.appState);
+          this.channel.publish('app:state:updated', this.appState);
         }
       }
     };
@@ -77,7 +77,7 @@ class LeaseholdApp {
       ...newAppState,
       modules
     };
-    this.channel.publish('state:updated', this.appState);
+    this.channel.publish('app:state:updated', this.appState);
   }
 
   async load(channel, options) {
