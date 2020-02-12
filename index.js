@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const os = require('os');
+const objectAssignDeep = require('object-assign-deep');
 
 class LeaseholdApp {
   constructor({processStream}) {
@@ -43,40 +44,18 @@ class LeaseholdApp {
       },
       updateModuleState: {
         handler: (action) => {
-          this.appState.modules = {
-            ...this.appState.modules,
-            ...action.params
-          };
-          this.channel.publish('leasehold_app:state:updated', {data: this.appState});
+          this.updateAppState({
+            modules: {
+              ...action.params
+            }
+          });
         }
       }
     };
   }
 
   updateAppState(newAppState) {
-    let {
-      version,
-      protocolVersion,
-      height,
-      state,
-      broadhash,
-      wsPort,
-      httpPort,
-      modules
-    } = this.appState;
-    this.appState = {
-      version,
-      protocolVersion,
-      os: this.os,
-      nonce: this.nonce,
-      height,
-      state,
-      broadhash,
-      wsPort,
-      httpPort,
-      ...newAppState,
-      modules
-    };
+    objectAssignDeep(this.appState, newAppState);
     this.channel.publish('leasehold_app:state:updated', {data: this.appState});
   }
 

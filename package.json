@@ -1,6 +1,6 @@
 {
   "name": "leasehold-app",
-  "version": "1.0.11",
+  "version": "2.0.0",
   "description": "Leasehold app module for LDEM.",
   "main": "index.js",
   "scripts": {
@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/Leasehold/leasehold-app/issues"
   },
-  "homepage": "https://github.com/Leasehold/leasehold-app#readme"
+  "homepage": "https://github.com/Leasehold/leasehold-app#readme",
+  "dependencies": {
+    "object-assign-deep": "^0.4.0"
+  }
 }
