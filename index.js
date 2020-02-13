@@ -56,7 +56,7 @@ class LeaseholdApp {
 
   updateAppState(newAppState) {
     objectAssignDeep(this.appState, newAppState);
-    this.channel.publish('leasehold_app:state:updated', {data: this.appState});
+    this.channel.publish('leasehold_app:state:updated', this.appState);
   }
 
   async load(channel, options) {
