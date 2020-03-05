@@ -60,8 +60,8 @@ class LeaseholdApp {
   }
 
   async load(channel, options) {
-    let mainNetworkConfig = this.appConfig.modules[this.appConfig.redirects.network] || {};
-    let mainHTTPAPIConfig = this.appConfig.modules[this.appConfig.redirects.http_api] || {};
+    let mainNetworkConfig = this.appConfig.modules[options.moduleRedirects.network] || {};
+    let mainHTTPAPIConfig = this.appConfig.modules[options.moduleRedirects.http_api] || {};
     this.channel = channel;
     this.options = options;
     this.appState = {
